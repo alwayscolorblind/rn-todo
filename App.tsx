@@ -1,21 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+import React, {createContext} from 'react';
+
+import { StyleSheet, View } from 'react-native';
+
+import NavBar from "./src/Navbar";
+
+import Store from "./src/store/store";
+
+import { observer } from "mobx-react";
+
+import TodoScreen from "./src/TodoScreen";
+
+const store = new Store();
+
+export const StoreContext = createContext(store);
+
+const App = observer(() => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <NavBar title="Todo App"/>
+      <StoreContext.Provider value={store}>
+          <View style={styles.container}>
+            <TodoScreen />
+          </View>
+      </StoreContext.Provider>
+      <StatusBar style="auto"/>
     </View>
   );
-}
+}); // TODO: Спросить про статусбар, так же про цикл
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20
   },
 });
+
+export default App;
