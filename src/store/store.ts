@@ -3,14 +3,14 @@ import { makeAutoObservable } from "mobx";
 import { ITodo } from "../interfaces/ITodo";
 
 export default class Store {
-  todos: ITodo[] = [
-    { id: "1", title: "test", completed: false },
-    { id: "2", title: "test", completed: false },
-    { id: "3", title: "test", completed: false },
-  ];
+  todos: ITodo[] = [];
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setTodos(todos: ITodo[]) {
+    this.todos = todos;
   }
 
   addTodo = (title: string) => {

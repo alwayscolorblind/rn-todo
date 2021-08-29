@@ -2,7 +2,7 @@ import React from 'react';
 
 import Todo from "./Todo";
 
-import { Alert, FlatList } from "react-native";
+import {Alert, FlatList, View} from "react-native";
 
 import { useStore } from "./hooks/useStore";
 
@@ -36,13 +36,13 @@ const TodoList = observer(() => {
   };
 
   return (
-      <FlatList
-          keyExtractor={(item) => item.id}
-          data={todos}
-          renderItem={({item}) => (
-              <Todo todo={item} handleComplete={makeTodoCompleted} handleRemove={handleRemove}/>
-          )}
-      />
+        <FlatList
+            keyExtractor={(item) => item.id}
+            data={todos}
+            renderItem={({item}) => (
+                <Todo todo={item} handleComplete={makeTodoCompleted} handleRemove={handleRemove}/>
+            )}
+        />
   );
 });
 

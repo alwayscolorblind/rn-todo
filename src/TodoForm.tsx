@@ -4,7 +4,13 @@ import {
   Button,
   TextInput,
   View,
-  StyleSheet, Alert
+  StyleSheet,
+  Alert,
+  TouchableNativeFeedback,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  TouchableNativeFeedbackComponent, Pressable
 } from "react-native";
 
 import { useStore } from "./hooks/useStore";
@@ -33,7 +39,14 @@ const TodoForm: FC = observer(() => {
             value={title}
             placeholder="Введите название"
         />
-        <Button title="Добавить" onPress={addHandler} color="#ff4545"/>
+        <Pressable onPress={addHandler} style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? "#76c6fd" : "#39a1e7"
+          },
+          styles.addBtn
+        ]}>
+            <Text style={styles.btnText}>Добавить</Text>
+        </Pressable>
       </View>
   );
 });
@@ -43,14 +56,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 10,
     marginBottom: 10
   },
   input: {
     width: "70%",
-    borderBottomWidth: 2,
-    borderStyle: "solid",
-    borderBottomColor: "#ff4545",
-    padding: 10
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#fff",
+    elevation: 5,
+    borderRadius: 10
+  },
+  addBtn: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingHorizontal: 10,
+    elevation: 5,
+    color: "#fff"
+  },
+  btnText: {
+    color: "#fff"
   }
 });
 

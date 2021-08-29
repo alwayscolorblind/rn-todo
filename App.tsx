@@ -1,40 +1,43 @@
 import { StatusBar } from 'expo-status-bar';
 
-import React, {createContext} from 'react';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { StyleSheet, View } from 'react-native';
+import React, { createContext } from 'react';
+
+import {DrawerLayoutAndroid, StyleSheet, View} from 'react-native';
 
 import NavBar from "./src/Navbar";
-
-import Store from "./src/store/store";
 
 import { observer } from "mobx-react";
 
 import TodoScreen from "./src/TodoScreen";
 
-const store = new Store();
+import {NavigationContainer} from "@react-navigation/native";
 
-export const StoreContext = createContext(store);
+import {createDrawerNavigator} from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
 
 const App = observer(() => {
   return (
-    <View>
-      <NavBar title="Todo App"/>
-      <StoreContext.Provider value={store}>
-          <View style={styles.container}>
-            <TodoScreen />
-          </View>
-      </StoreContext.Provider>
-      <StatusBar style="auto"/>
-    </View>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="Todo">
+          <Drawer.Screen name="Todo" component={TodoScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </SafeAreaProvider>
   );
 }); // TODO: Спросить про статусбар, так же про цикл
 
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-    paddingHorizontal: 20
-  },
-});
-
 export default App;
+
+// <NavBar title="Todo App b1"/>
+// <StoreContext.Provider value={store}>
+//   <View style={styles.container}>
+//     <Drawer.Navigator initialRouteName="Home">
+//       <Drawer.Screen name="Home" component={TodoScreen} />
+//     </Drawer.Navigator>
+//   </View>
+// </StoreContext.Provider>

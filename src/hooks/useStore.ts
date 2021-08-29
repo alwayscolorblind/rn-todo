@@ -1,5 +1,5 @@
-import { useContext } from "react";
+import Store from "../store/store";
 
-import { StoreContext } from "../../App";
+const store = new Store();
 
-export const useStore = () => useContext(StoreContext);
+export const useStore = () => store;
