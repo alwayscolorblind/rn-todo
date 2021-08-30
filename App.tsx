@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import React, { createContext } from 'react';
 
@@ -14,20 +14,35 @@ import TodoScreen from "./src/TodoScreen";
 
 import {NavigationContainer} from "@react-navigation/native";
 
-import {createDrawerNavigator} from "@react-navigation/drawer";
+import {createDrawerNavigator, DrawerContent, DrawerItem} from "@react-navigation/drawer";
+import AboutScreen from "./src/AboutScreen";
 
 const Drawer = createDrawerNavigator();
 
 const App = observer(() => {
+  const state = {
+    type: 'stack',
+    key: 'stack-1',
+    routeNames: ['Home'],
+    routes: [
+      { key: 'home-1', name: 'Home', params: { sortBy: 'latest' } }
+    ],
+    index: 1,
+    stale: false,
+  };
+
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Todo">
-          <Drawer.Screen name="Todo" component={TodoScreen} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-      <StatusBar style="auto" />
-    </SafeAreaProvider>
+      <SafeAreaView style={{flex: 1}}>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Дела"
+                            screenOptions={{
+                              swipeEdgeWidth: 1000
+                            }}>
+            <Drawer.Screen name="Дела" component={TodoScreen} />
+            <Drawer.Screen name={"О приложении"} component={AboutScreen} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
   );
 }); // TODO: Спросить про статусбар, так же про цикл
 

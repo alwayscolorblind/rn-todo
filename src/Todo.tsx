@@ -5,16 +5,23 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface TodoProps {
   todo: ITodo,
-  handleComplete: (id: string) => void,
-  handleRemove: (todo: ITodo) => void
+  handleComplete?: (id: ITodo) => void,
+  handleRemove?: (todo: ITodo) => void,
+  handleUncomplete?: (todo: ITodo) => void
 }
 
-const Todo: FC<TodoProps> = ({ todo, handleComplete, handleRemove }) => {
+const Todo: FC<TodoProps> = (
+    {
+      todo,
+      handleComplete,
+      handleRemove,
+      handleUncomplete
+    }) => {
   return (
       <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => handleComplete(todo.id)}
-          onLongPress={() => handleRemove(todo)}
+          onPress={() => todo.completed ? handleUncomplete!(todo) : handleComplete!(todo)}
+          onLongPress={() => handleRemove ? handleRemove(todo) : null}
           style={todo.completed ? styles.todoCompleted : styles.todo}
       >
           <Text style={todo.completed ? styles.completed : null}>{todo.title}</Text>
@@ -36,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 15,
-    backgroundColor: "#dadada",
+    backgroundColor: "#eaeaea",
     borderRadius: 10,
     marginVertical: 5
   },

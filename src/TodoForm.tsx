@@ -39,14 +39,14 @@ const TodoForm: FC = observer(() => {
             value={title}
             placeholder="Введите название"
         />
-        <Pressable onPress={addHandler} style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "#76c6fd" : "#39a1e7"
-          },
-          styles.addBtn
-        ]}>
+        <TouchableNativeFeedback
+            onPress={addHandler}
+            useForeground={TouchableNativeFeedback.canUseNativeForeground()}
+        >
+          <View style={styles.addBtn}>
             <Text style={styles.btnText}>Добавить</Text>
-        </Pressable>
+          </View>
+        </TouchableNativeFeedback>
       </View>
   );
 });
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     paddingHorizontal: 10,
     elevation: 5,
-    color: "#fff"
+    backgroundColor: "#108ee0"
   },
   btnText: {
     color: "#fff"
@@ -82,3 +82,10 @@ const styles = StyleSheet.create({
 });
 
 export default TodoForm;
+
+// style={({ pressed }) => [
+//   {
+//     backgroundColor: pressed ? "#76c6fd" : "#108ee0"
+//   },
+//   styles.addBtn
+// ]}
